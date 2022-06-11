@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ event.title }}</h1>
+
+<ul>
+    <li><b>Author:</b> {{ event.author }}</li>
+    <li><b>Addressaten:</b> {{ event.recipients }}</li>
+    <li><b>Ort:</b> {{ event.location }}</li>
+    <li><b>Startdatum:</b> {{ event.start_date }}</li>
+    <li><b>Startzeit:</b> {{ event.start_time }}</li>
+    <li><b>Enddatum:</b> {{ event.end_date }}</li>
+    <li><b>Endzeit:</b> {{ event.end_time }}</li>
+    <li><b>Ganztags:</b> {{ event.all_day }}</li>
+    <li><b>Beschreibung:</b> {{ event.description }}</li>
+</ul>
+
+{%  endblock %}
