@@ -1,2 +1,4 @@
 schulkalender/migrations/
 db.sqlite3
+.idea/
+*.egg-info/
