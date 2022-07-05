@@ -1,6 +1,2 @@
-*/
-!schulkalender/
-!schulkalender/*/
 schulkalender/migrations/
 db.sqlite3
-manage.py

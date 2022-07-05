@@ -11,7 +11,7 @@ from .models import Event
 class EventCreate(FormView):
     template_name = "event_create.html"
     form_class = EventForm
-    success_url = "/schulkalender/"
+    success_url = "/kalender/"
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:
@@ -30,7 +30,7 @@ def create(request):
 class EventDelete(DeleteView):
     template_name = "event_delete.html"
     model = Event
-    success_url = "/schulkalender/"
+    success_url = "/kalender/"
 
     def form_valid(self, form):
         if self.request.user.is_authenticated and (self.object.author == self.request.user.get_username() or self.request.user.is_superuser):
@@ -48,7 +48,7 @@ class EventUpdate(UpdateView):
     model = Event
     fields = ["title", "location", "recipients", "start_date", "start_period", "start_time",
               "end_date", "end_period", "end_time", "all_day", "description"]
-    success_url = "/schulkalender/"
+    success_url = "/kalender/"
 
     def form_valid(self, form):
         if self.request.user.is_authenticated and (self.object.author == self.request.user.get_username() or self.request.user.is_superuser):
@@ -83,7 +83,7 @@ def filter(request, query, username):
         if query == "":
             return render(request, "index.html", context)
         else:
-            return HttpResponseRedirect(f"/schulkalender/filter={query}")
+            return HttpResponseRedirect(f"/kalender/filter={query}")
     else:
         return render(request, "index.html", context)
 

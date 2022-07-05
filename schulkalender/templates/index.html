@@ -18,13 +18,13 @@
 
 <form method="post">
     {% csrf_token %}
-    {{ filterform.as_p }}<button type="submit" >Filtern</button>
+    {{ filterform.as_p }}<button type="submit">Filtern</button>
 </form>
 
-<a href="/schulkalender/"><button>Reset</button></a><br>
+<a href="/kalender/"><button>Reset</button></a><br>
 
 {% if user.is_authenticated %}
-    <a href="/schulkalender/own"><button>Eigene</button></a>
+    <a href="/kalender/own"><button>Eigene</button></a>
 {% endif %}
 
 {% if eventlist %}

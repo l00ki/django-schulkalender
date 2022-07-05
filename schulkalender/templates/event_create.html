@@ -5,20 +5,9 @@
 <h1>Event hinzuf&uuml;gen</h1>
 
   <form action="" method="post">
-    {% csrf_token %}
-    <table>
-        <tr>
-            <th><label for="id_title">Titel:</label></th>
-            <td><input type="text" name="title" maxlength="100" required id="id_title"></td>
-        </tr>
-        <tr>
-            <th><label for="id_start_date">Datum:</label></th>
-            <td>
-                <input type="text" name="start_date" maxlength="100" required id="id_start_date">
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Speichern">
+      {% csrf_token %}
+      <table>{{ form.as_table }}</table>
+      <input type="submit" value="Speichern">
   </form>
 
 {% endblock %}

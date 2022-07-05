@@ -13,7 +13,7 @@ urlpatterns = [
     path('create/', views.EventCreate.as_view(template_name="event_create.html")),
     path('edit/<pk>', views.EventUpdate.as_view()),
     path('delete/<pk>', views.EventDelete.as_view()),
-    path('login/', authviews.LoginView.as_view(template_name="login.html", next_page="/schulkalender/")),
-    path('logout/', authviews.LogoutView.as_view(next_page="/schulkalender/")),
-    path('pwchange/', authviews.PasswordChangeView.as_view(template_name="pwchange.html", success_url="/schulkalender/")),
+    path('login/', authviews.LoginView.as_view(template_name="login.html", next_page="/kalender/")),
+    path('logout/', authviews.LogoutView.as_view(next_page="/kalender/")),
+    path('pwchange/', authviews.PasswordChangeView.as_view(template_name="pwchange.html", success_url="/kalender/")),
 ]
