@@ -6,14 +6,49 @@
 
 <ul>
     <li><b>Author:</b> {{ event.author }}</li>
-    <li><b>Addressaten:</b> {{ event.recipients }}</li>
-    <li><b>Ort:</b> {{ event.location }}</li>
-    <li><b>Startdatum:</b> {{ event.start_date }}</li>
-    <li><b>Startzeit:</b> {{ event.start_time }}</li>
-    <li><b>Enddatum:</b> {{ event.end_date }}</li>
-    <li><b>Endzeit:</b> {{ event.end_time }}</li>
-    <li><b>Ganztags:</b> {{ event.all_day }}</li>
-    <li><b>Beschreibung:</b> {{ event.description }}</li>
+    {% if event.recipients %}
+      <li><b>Addressaten:</b> {{ event.recipients }}</li>
+    {% endif %}
+    {% if event.start_date %}
+      <li><b>Startdatum:</b> {{ event.start_date }}</li>
+    {% endif %}
+    {% if event.start_period %}
+      <li><b>Startstunde:</b> {{ event.start_period }}</li>
+    {% endif %}
+    {% if event.start_time %}
+      <li><b>Startzeit:</b> {{ event.start_time }}</li>
+    {% endif %}
+    {% if event.end_date %}
+      <li><b>Enddatum:</b> {{ event.end_date }}</li>
+    {% endif %}
+    {% if event.end_period %}
+      <li><b>Endstunde:</b> {{ event.end_period }}</li>
+    {% endif %}
+    {% if event.end_time %}
+      <li><b>Endzeit:</b> {{ event.end_time }}</li>
+    {% endif %}
+    {% if event.location %}
+      <li><b>Ort:</b> {{ event.location }}</li>
+    {% endif %}
+    {% if event.all_day %}
+      <li><b>Ganztags:</b> {{ event.all_day }}</li>
+    {% endif %}
+    {% if event.description %}
+      <li><b>Beschreibung:</b> {{ event.description }}</li>
+    {% endif %}
 </ul>
 
+{% if owned == True %}
+<a href="/kalender/edit/{{ event.id }}">
+  <button class="btn btn-sm btn-warning">&auml;ndern</button>
+</a>
+
+<a href="/kalender/delete/{{ event.id }}">
+  <button class="btn btn-sm btn-danger">l&ouml;schen</button>
+</a>
+{% endif %}
+
+<button class="btn btn-sm btn-primary" onClick="javascript:history.go(-1)">zur&uuml;ck</button>
+
 {%  endblock %}
+

@@ -2,10 +2,12 @@
 
 {% block content %}
 
-<h1>Event l&oumlschen?</h1>
+<h1>Event "{{ event }}" l&oumlschen?</h1>
 
   <form action="" method="post">
     {% csrf_token %}
     <input type="submit" value="L&ouml;schen!">
   </form>
+  <button class="btn btn-sm btn-primary" onClick="javascript:history.go(-1)">zur&uuml;ck</button>
+
 {% endblock %}

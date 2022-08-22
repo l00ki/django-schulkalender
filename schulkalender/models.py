@@ -16,6 +16,7 @@ class Event(models.Model):
     end_time = models.TimeField("Endzeit", blank=True, null=True)
     all_day = models.BooleanField("Ganztag?")
     description = models.TextField("Beschreibung", blank=True, null=True)
+    teacher_only = models.BooleanField("Nur Lehrer?")
 
     def __repr__(self):
         return f"Event(\"{self.title}\", \"{self.author}\", \"{self.location}\", " \
