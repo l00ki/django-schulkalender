@@ -8,9 +8,10 @@ from django.views.generic.edit import DeleteView, FormView, UpdateView
 from django.utils import timezone
 from .forms import FilterForm, EventForm, DatePickerInput, TimePickerInput
 from .models import Event
+from .settings import base_url
 
 from copy import deepcopy
-from datetime import date, time, timedelta
+from datetime import date, datetime, time, timedelta
 import locale
 
 
@@ -42,7 +43,7 @@ def event_to_day(event, day, user):
 class EventCreate(FormView):
     template_name = "event_create.html"
     form_class = EventForm
-    success_url = "/kalender/"
+    success_url = f"{base_url}"
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:
@@ -57,7 +58,7 @@ class EventCreate(FormView):
 class EventDelete(DeleteView):
     template_name = "event_delete.html"
     model = Event
-    success_url = "/kalender/"
+    success_url = f"{base_url}"
 
     def form_valid(self, form):
         if self.request.user.is_authenticated and (self.object.author == self.request.user.get_username() or self.request.user.is_superuser):
@@ -70,10 +71,11 @@ class EventUpdate(UpdateView):
     template_name = "event_update.html"
     form_class = EventForm
     model = Event
-    success_url = "/kalender/"
+    success_url = f"{base_url}"
 
     def form_valid(self, form):
-        if self.request.user.is_authenticated and (self.object.author == self.request.user.get_username() or self.request.user.is_superuser):
+        user = self.request.user
+        if user.is_authenticated and (self.object.author == user.get_username() or user.is_superuser):
             return super().form_valid(form)
         else:
             return HttpResponseForbidden("nicht authentifiziert")
@@ -83,15 +85,16 @@ def detail(request, pk):
     event = get_object_or_404(Event, pk=pk)
     user = request.user 
     owned = event.author == user.username or  user.is_superuser
-    return render(request, "detail.html", {"event": event, "owned": owned})
+    return render(request, "detail.html", {"event": event, "owned": owned, "user": user})
 
 
 def filter(request, query, username):
+    today = date.today()
     if query or query == "":
-         eventlist = Event.objects.filter(Q(recipients__icontains=query) | Q(recipients__exact=None))
-         eventlist = eventlist.order_by("start_date")
+        eventlist = Event.objects.filter(Q(recipients__icontains=query) | Q(recipients__exact=None))
     else:
-        eventlist = Event.objects.order_by("start_date")
+        eventlist = Event.objects.filter(start_date__gte=today)
+    eventlist = eventlist.order_by("start_date")
     user = request.user
     if username:
         eventlist = eventlist.filter(author__exact=username)
@@ -112,7 +115,7 @@ def filter(request, query, username):
             context["query"] = query
             return render(request, "index.html", context)
         else:
-            return HttpResponseRedirect(f"/kalender/filter={newquery}")
+            return HttpResponseRedirect(f"{base_url}filter={newquery}")
     else:
         return render(request, "index.html", context)
 
@@ -139,7 +142,7 @@ def dayslist(events, user, pad):
     today = timezone.localdate()
     dayslist = []
     if pad:
-        currentdate = events[0].start_date
+        currentdate = today
         if currentdate.month == 8 and currentdate.day == 1:
             currentdate += oneday
         eventsiter = iter(events)
@@ -164,7 +167,7 @@ def dayslist(events, user, pad):
                     days += [deepcopy(day)]
                     if onevent.end_date < currentdate:
                         ongoing.remove(onevent)
-            while event and event.start_date == currentdate:
+            while event and (event.start_date == currentdate):
                 day = event_to_day(event, daytmp, user)
                 if len(days) >= 1:
                     day["start_date"] = ""

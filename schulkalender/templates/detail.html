@@ -36,14 +36,20 @@
     {% if event.description %}
       <li><b>Beschreibung:</b> {{ event.description }}</li>
     {% endif %}
+    {% if event.description %}
+      <li><b>Beschreibung:</b> {{ event.description }}</li>
+    {% endif %}
+    {% if owned or user.is_superuser %}
+      <li><b>Letzte &Auml;nderung:</b> {{ event.timestamp }}</li>
+    {% endif %}
 </ul>
 
 {% if owned == True %}
-<a href="/kalender/edit/{{ event.id }}">
+<a href="/edit/{{ event.id }}">
   <button class="btn btn-sm btn-warning">&auml;ndern</button>
 </a>
 
-<a href="/kalender/delete/{{ event.id }}">
+<a href="/delete/{{ event.id }}">
   <button class="btn btn-sm btn-danger">l&ouml;schen</button>
 </a>
 {% endif %}

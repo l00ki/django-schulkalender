@@ -10,7 +10,7 @@
 <body>
   <div class="container-lg p-0 border">
     <nav class="navbar navbar-dark navbar-expand-lg justify-content-between px-2" style="background-color: #177fff;">
-      <a class="navbar-brand" href="/kalender/">
+      <a class="navbar-brand" href="/">
         WHG Kalender
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,17 +23,17 @@
               User: {{ user.username }}
             </span>
             <li class="nav-item">
-              <a class="nav-link" href="/kalender/create/">Event hinzuf&uuml;gen</a>
+              <a class="nav-link" href="/create/">Event hinzuf&uuml;gen</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/kalender/pwchange/">Passwort &auml;ndern</a>
+              <a class="nav-link" href="/pwchange/">Passwort &auml;ndern</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/kalender/logout/">Ausloggen</a>
+              <a class="nav-link" href="/logout/">Ausloggen</a>
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="/kalender/login/">Lehrer-Login</a>
+              <a class="nav-link" href="/login/">Lehrer-Login</a>
             </li>
           {% endif %}
         </ul>
@@ -43,9 +43,9 @@
           <button class="btn btn-sm btn-success" type="submit">Suchen</button>
         </form>
         {% if user.is_authenticated %}
-        <a href="/kalender/own"><button class="btn btn-sm btn-warning">Nur Eigene</button></a>
+        <a href="/own"><button class="btn btn-sm btn-warning">Nur Eigene</button></a>
         {% endif %}
-        <a href="/kalender/"><button class="btn btn-sm btn-danger">Zur&uuml;cksetzen</button></a>
+        <a href="/"><button class="btn btn-sm btn-danger">Zur&uuml;cksetzen</button></a>
       </div>
     </nav>
     {% block content %}

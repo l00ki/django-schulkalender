@@ -23,9 +23,9 @@
       {% for event in eventlist %}
     <tr
       {% if event.title and event.weekend %}
-      class="clickable bg-light" onclick="window.location='/kalender/detail/{{ event.id }}'"
+      class="clickable bg-light" onclick="window.location='/detail/{{ event.id }}'"
       {% elif event.title %}
-      class="clickable" onclick="window.location='/kalender/detail/{{ event.id }}'"
+      class="clickable" onclick="window.location='/detail/{{ event.id }}'"
       {% elif event.weekend %}
       class="bg-light"
       {% endif %}
@@ -39,8 +39,8 @@
           <td>{{ event.description }}</td>
           {% if event.owned %}
             <td>
-              <a href="/kalender/edit/{{ event.id }}">&auml;ndern</a>
-              <a href="/kalender/delete/{{ event.id }}">l&ouml;schen</a>
+              <a href="/edit/{{ event.id }}">&auml;ndern</a>
+              <a href="/delete/{{ event.id }}">l&ouml;schen</a>
             </td>
           {% else %}
             {% if user %}
