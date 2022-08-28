@@ -2,3 +2,4 @@ schulkalender/migrations/
 db.sqlite3
 .idea/
 *.egg-info/
+**__pycache__/
