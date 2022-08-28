@@ -15,7 +15,7 @@ from datetime import date, datetime, time, timedelta
 import locale
 
 
-#locale.setlocale(locale.LC_ALL, "de_DE.UTF-8")
+locale.setlocale(locale.LC_ALL, "de_DE.UTF-8")
 
 
 def event_to_day(event, day, user):
