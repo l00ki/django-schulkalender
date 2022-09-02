@@ -3,10 +3,6 @@ version: "3.3"
 services:
   app:
     build: .
-    command: bash -c "
-      python manage.py makemigrations
-      && python manage.py makemigrations schulkalender
-      && python manage.py migrate
-      && python manage.py runserver 0:8000"
+    command: bash -c "python manage.py runserver 0:8000"
     ports:
       - "80:8000"

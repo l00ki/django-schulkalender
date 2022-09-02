@@ -23,6 +23,7 @@ RUN pip install .
 WORKDIR /code
 RUN django-admin startproject djangoinstance
 WORKDIR /code/djangoinstance
+COPY db.sqlite3 .
 COPY resources/settings.py djangoinstance
 COPY resources/urls.py djangoinstance
 

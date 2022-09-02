@@ -36,8 +36,8 @@
     {% if event.description %}
       <li><b>Beschreibung:</b> {{ event.description }}</li>
     {% endif %}
-    {% if event.description %}
-      <li><b>Beschreibung:</b> {{ event.description }}</li>
+    {% if event.teacher_only %}
+      <li><b>Nur Lehrer:</b> {{ event.teacher_only }}</li>
     {% endif %}
     {% if owned or user.is_superuser %}
       <li><b>Erstellt am:</b> {{ event.timestamp }}</li>

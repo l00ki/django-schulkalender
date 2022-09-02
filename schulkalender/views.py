@@ -84,18 +84,20 @@ class EventUpdate(UpdateView):
 def detail(request, pk):
     event = get_object_or_404(Event, pk=pk)
     user = request.user 
-    owned = event.author == user.username or  user.is_superuser
+    owned = event.author == user.username or user.is_superuser
     return render(request, "detail.html", {"event": event, "owned": owned, "user": user})
 
 
 def filter(request, query, username):
     today = date.today()
-    if query or query == "":
-        eventlist = Event.objects.filter(Q(recipients__icontains=query) | Q(recipients__exact=None))
-    else:
-        eventlist = Event.objects.filter(start_date__gte=today)
-    eventlist = eventlist.order_by("start_date")
     user = request.user
+    eventlist = Event.objects.filter(Q(start_date__gte=today))
+    if query or query == "":
+        q = Q(recipients__icontains=query) | Q(recipients__exact=None)
+        eventlist = Event.objects.filter(q)
+    if not user.is_authenticated:
+        eventlist = eventlist.exclude(teacher_only=True)
+    eventlist = eventlist.order_by("start_date")
     if username:
         eventlist = eventlist.filter(author__exact=username)
     if not username and (not query or query == ""):
@@ -198,7 +200,7 @@ def dayslist(events, user, pad):
             if type(day["start_time"]) == time:
                 day["start_time"] = day["start_time"].strftime("%H:%M")
             if type(day["end_time"]) == time:
-                day["end_time"] = day["start_time"].strftime("%H:%M")
+                day["end_time"] = day["end_time"].strftime("%H:%M")
             if event.start_date != currentdate:
                 currentdate = event.start_date
                 day["start_date"] = event.start_date.strftime("%a %d.%m.%y")
