@@ -1,8 +1,69 @@
 version: "3.3"
 
 services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: django
+      POSTGRES_PASSWORD: example
+
   app:
-    build: .
-    command: bash -c "python manage.py runserver 0:8000"
+    image: python
+    environment:
+      LANG: de_DE.UTF-8
+      LC_ALL: de_DE.UTF-8
+      PYTHONUNBUFFERED: 1
+    volumes:
+      - ./:/app/django-schulkalender_host/:ro
+      - schulkalender-www:/var/www/schulkalender/:rw
+    command:
+      - /bin/sh
+      - -c
+      - |
+        apt-get update
+        apt-get install -y locales
+        sed -i -e 's/# de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen
+        dpkg-reconfigure --frontend=noninteractive locales
+        cd /app
+        cp -r django-schulkalender_host django-schulkalender
+        pip install -r ./django-schulkalender/requirements.txt
+        pip install ./django-schulkalender
+        django-admin startproject djangoinstance
+        cd djangoinstance
+        cp ../django-schulkalender_host/data/pg_service.conf djangoinstance
+        cp ../django-schulkalender_host/data/pgpass djangoinstance
+        cp ../django-schulkalender_host/data/settings.py djangoinstance
+        cp ../django-schulkalender_host/data/urls.py djangoinstance
+        cp ../django-schulkalender_host/data/dev.py djangoinstance
+        mkdir -pv /var/www/schulkalender/
+        python manage.py collectstatic
+        python manage.py makemigrations schulkalender
+        python manage.py migrate
+        python manage.py loaddata ../django-schulkalender_host/db.json
+        gunicorn -c djangoinstance/dev.py
+
+  server:
+    image: nginx
     ports:
-      - "80:8000"
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./data/nginx-conf/:/etc/nginx/conf.d/:ro
+      - schulkalender-www:/var/www/schulkalender/:ro
+      - certbot-www:/var/www/certbot/:ro
+      - certbot-conf:/etc/nginx/ssl/:ro
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot-www:/var/www/certbot/:rw
+      - certbot-conf:/etc/letsencrypt/:rw
+    command: "certonly --webroot --rsa-key-size 4096 --webroot-path /var/www/certbot/ --email lukas@schreder.xyz --agree-tos -d schreder.xyz"
+
+
+volumes:
+  certbot-conf:
+  certbot-www:
+  schulkalender-www:

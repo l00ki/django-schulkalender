@@ -73,6 +73,16 @@ class EventUpdate(UpdateView):
     model = Event
     success_url = f"{base_url}"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tmp_date = self.get_object().start_date
+        if tmp_date:
+            context["start_date"] = f"{tmp_date.year:04d}-{tmp_date.month:02d}-{tmp_date.day:02d}"
+        tmp_date = self.get_object().end_date
+        if tmp_date:
+            context["end_date"] = f"{tmp_date.year:04d}-{tmp_date.month:02d}-{tmp_date.day:02d}"
+        return context
+
     def form_valid(self, form):
         user = self.request.user
         if user.is_authenticated and (self.object.author == user.get_username() or user.is_superuser):

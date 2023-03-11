@@ -1,5 +1,6 @@
-schulkalender/migrations/
+build/
 db.sqlite3
+schulkalender/migrations/
 .idea/
 *.egg-info/
 **__pycache__/

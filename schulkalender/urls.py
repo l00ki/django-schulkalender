@@ -17,4 +17,5 @@ urlpatterns = [
     path('login/', authviews.LoginView.as_view(template_name="login.html", next_page=f"{base_url}")),
     path('logout/', authviews.LogoutView.as_view(next_page=f"{base_url}")),
     path('pwchange/', authviews.PasswordChangeView.as_view(template_name="pwchange.html", success_url=f"{base_url}")),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]

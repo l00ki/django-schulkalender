@@ -6,7 +6,107 @@
 
   <form action="" method="post">
     {% csrf_token %}
-    <table>{{ form.as_table }}</table>
+    <!--<table>{{ form.as_table }}</table>-->
+    <table>
+      <tbody>
+        <tr>
+          <th>
+            <label for="id_title">Titel:</label>
+          </th>
+          <td>
+            {{ form.title }}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_recipients">Addressaten:</label>
+          </th>
+          <td>
+            {{ form.recipients }}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_start_date">Datum:</label>
+          </th>
+          <td>
+            <input id="id_start_date" type="date" name="start_date" value={{ start_date }}>
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_start_period">Startstunde:</label>
+          </th>
+          <td>
+            {{ form.start_period }}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_start_time">Startzeit:</label>
+          </th>
+          <td>
+            {{ form.start_time }}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_end_date">Enddatum:</label>
+          </th>
+          <td>
+            <input id="id_end_date" type="date" name="end_date" value={{ end_date }}>
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_end_period">Endstunde:</label>
+          </th>
+          <td>
+            {{ form.end_period }}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_end_time">Endzeit:</label>
+          </th>
+          <td>
+            {{ form.end_time }}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_location">Ort:</label>
+          </th>
+          <td>
+            {{ form.location }}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_all_day">Ganztag?</label>
+          </th>
+          <td>
+            {{ form.all_day }}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_teacher_only">Nur Lehrer?</label>
+          </th>
+          <td>
+            {{ form.teacher_only }}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="id_description">Beschreibung:</label>
+          </th>
+          <td>
+            {{ form.description }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <input type="submit" value="Speichern">
   </form>
   <button class="btn btn-sm btn-primary" onClick="javascript:history.go(-1)">zur&uuml;ck</button>

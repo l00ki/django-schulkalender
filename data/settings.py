@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-i)lfcuopx6y28tpa(g5g2m^2*0lk)xbwv3lb5q1x6kmi^i*b(7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = ['schreder.xyz', 'whgkalender.schreder.xyz']
+CSRF_TRUSTED_ORIGINS = ['https://schreder.xyz']
 
 
 # Application definition
@@ -77,8 +78,12 @@ WSGI_APPLICATION = 'djangoinstance.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django',
+        'USER': 'django',
+        'PASSWORD': 'example',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
@@ -116,8 +121,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/var/www/schulkalender/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
